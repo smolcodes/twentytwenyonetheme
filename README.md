@@ -20,4 +20,4 @@ It's a simple theme heavily inspired by Ghost's default Casper theme. It is also
 * Webpack
 
 
-[![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/Twenty-TwentyOne-Theme)
+[![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/smolcodes/twentytwenyonetheme)
