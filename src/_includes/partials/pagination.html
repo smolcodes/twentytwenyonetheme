@@ -1,0 +1,15 @@
+{# Only renders this section if there are links to render #}
+{% if pagination.href.next or pagination.href.previous %}
+      <nav class="flex justify-between " aria-label="Pagination links">
+               {% if pagination.href.next %}
+          <a class="text-2xl p-2 hover:bg-yellow-100" href="{{ pagination.href.next }}{{ paginationAnchor }}" data-direction="forwards">
+            ← {{ paginationNextText if paginationNextText else 'Next' }}
+          </a>
+        {% endif %}
+             {% if pagination.href.previous %}
+          <a class="text-2xl p-2 hover:bg-yellow-100" href="{{ pagination.href.previous }}{{ paginationAnchor }}" data-direction="backwards">
+            {{ paginationPrevText if paginationPrevText else 'Previous' }} →
+          </a>
+        {% endif %}
+      </nav>
+{% endif %}

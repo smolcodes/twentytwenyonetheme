@@ -1,0 +1,12 @@
+    <header id="header" class="w-full m-0 p-0 bg-cover bg-bottom bg-gradient-to-r from-green-400 to-blue-500" style="background-image:url('{{ pageHeaderImage }}');">
+   <div class="bg-opacity-60 bg-gray-900" style="height: 60vh; max-height:460px;">
+    <div class="container max-w-4xl mx-auto pt-16 md:pt-32 text-center break-normal text-gray-100">
+    <h1 class="text-red-400 font-black font-serif text-4xl md:text-5xl">
+      {{ pageHeaderTitle }}
+    </h1>
+    {% if pageHeaderSummary %}
+      {{ pageHeaderSummary | safe }}
+    {% endif %}
+    </div>
+    </div>
+</header>

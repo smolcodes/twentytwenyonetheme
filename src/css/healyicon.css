@@ -1,0 +1,60 @@
+.healy {
+  border-radius: 50%;
+  display: inline-block;
+  margin-left: 5px; 
+  margin-right: 10px;
+}
+.healy-smol {
+    height: 40px;
+    width: 40px;
+    background-size: 40px;
+}
+.healy-reg {
+    height: 64px;
+    width: 64px;
+    background-size: 64px;
+}
+.healy-big {
+    height: 96px;
+    width: 96px;
+    background-size: 96px;
+}
+.healy-aaa {
+    background-image: url("/images/icons/aaa.jpg");
+}
+.healy-confused {
+    background-image: url("/images/icons/confused.jpg");
+}
+.healy-content {
+    background-image: url("/images/icons/content.jpg");
+}
+.healy-fauxthot {
+    background-image: url("/images/icons/fauxthot.jpg");
+}
+.healy-happy {
+    background-image: url("/images/icons/happy.jpg");
+}
+.healy-hey {
+    background-image: url("/images/icons/hey.jpg");
+}
+.healy-okfriendo {
+    background-image: url("/images/icons/okfriendo.jpg");
+}
+.healy-reassure {
+    background-image: url("/images/icons/reassure.jpg");
+}
+.healy-sad {
+    background-image: url("/images/icons/sad.jpg");
+}
+.healy-scene {
+    background-image: url("/images/icons/scene.jpg");
+}
+.healy-squint {
+    background-image: url("/images/icons/squint.jpg");
+}
+.healy-thirsty {
+    background-image: url("/images/icons/thirsty.jpg");
+}
+.healy-work {
+    background-image: url("/images/icons/work.jpg");
+}
