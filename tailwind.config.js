@@ -22,9 +22,22 @@ module.exports = {
             color: '#EF4444',
           },
           i: {
-              fontWeight: '400',
-              color: '#F59E0B',
+              fontWeight: '700',
+              color: '#2563EB',
+              fontFamily: 'Bitter',
           },
+          h1: {
+             fontFamily: 'Bitter',
+          },
+          h2: {
+            fontFamily: 'Bitter',
+         },
+         h3: {
+          fontFamily: 'Bitter',
+          },
+          h4: {
+            fontFamily: 'Bitter',
+         },
           a: {
             backgroundColor: '#FFFBEB',
             fontWeight: '700',
