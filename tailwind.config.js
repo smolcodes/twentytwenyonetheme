@@ -13,9 +13,20 @@ module.exports = {
     typography: {
       DEFAULT: {
         css: {
+          "code::before": false,
+          "code::after": false,
+          "blockquote p:first-of-type::before": false,
+          "blockquote p:last-of-type::after": false,
           color: '#333',
+          strong: {
+            color: '#EF4444',
+          },
+          i: {
+              fontWeight: '400',
+              color: '#F59E0B',
+          },
           a: {
-            background: '#FFFBEB',
+            backgroundColor: '#FFFBEB',
             fontWeight: '700',
             color: '#6B7280',
             transition: '1s',
@@ -46,6 +57,7 @@ module.exports = {
             backgroundColor: 'transparent',
             borderRadius: '5px',
             padding:'none',
+            whiteSpace: 'pre-wrap',
           },
         },
         img: {
