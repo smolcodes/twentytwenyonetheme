@@ -1,0 +1,32 @@
+{% set assetHash = global.random() %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    {% include "partials/meta-info.njk" %}
+    <link rel="alternate" type="application/rss+xml" href="{{ site.url }}/feed.xml" />
+<script async
+  src="//mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+ <link rel="stylesheet" href="/assets/main.bundle.css">
+ <link href="https://unpkg.com/prismjs@1.20.0/themes/prism-okaidia.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="/css/healyicon.css">
+  </head>
+  <body class="{% if eleventyNavigation.key %}{{ eleventyNavigation.key }}{% endif %} bg-blue-50 font-sans leading-normal tracking-normal overflow-x-hidden w-full ">
+  <a class="sr-only focus:not-sr-only" href="#main"> Skip to main</a>
+        {% include "partials/page-header.njk" %} 
+            <main id="main">
+        <section class="container px-4 md:px-0 max-w-6xl mx-auto -mt-32 mb-32">
+        <div class="mx-0 sm:mx-6">
+         {% include "partials/navigation.njk" %}
+        {% block content %}
+        {% endblock %}
+        </div>
+      </section
+</main>
+<!--FitVid-->
+<script src="/assets/main.bundle.js" defer></script>
+  </body>
+</html>

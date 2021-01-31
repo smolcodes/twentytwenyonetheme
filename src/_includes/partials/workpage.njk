@@ -1,0 +1,8 @@
+{% extends "layouts/base.html" %}
+ {% set pageHeaderTitle = title %}
+ {% set pageHeaderImage = imageURL %}
+{% block content %}
+    <article class="prose lg:prose-xl w-full mx-auto mt-40">
+      {{ content | safe }}
+      </article>
+{% endblock %}

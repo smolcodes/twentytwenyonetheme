@@ -1,6 +1,6 @@
 ---
 title: 'Hello There 👋'
-layout: 'layouts/page.html'
+layout: 'layouts/page.njk'
 permalink: '/about/index.html'
 imageURL: https://pbs.twimg.com/media/EFwC00PWkAElLDC?format=jpg&name=large
 eleventyNavigation:

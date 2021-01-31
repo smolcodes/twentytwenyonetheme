@@ -1,0 +1,41 @@
+{% extends "layouts/base.njk" %}
+{% set pageHeaderTitle = title %}
+{% set pageHeaderImage = imageURL %}
+
+{# Grab other posts that aren't this one for the 'more from the blog' feed #}
+{% set recommendedPosts = helpers.getSiblingContent(collections.blog, page) %}
+{# Render post date and any tags that this post has been filed under #}
+{% set pageHeaderSummary %}
+     <time datetime="{{ date | w3DateFilter }}">{{ date | dateFilter }}</time>
+  {% if tags %}
+    <p class="visually-hidden" id="tags-desc">Tags for this post
+      {% for tag in tags %}
+          <a class="tags" href="/tag/{{ tag | slug }}/">#{{ tag | replace(' ', '') | capitalize }}</a>
+      {% endfor %}
+      </p>
+  {% endif %}
+  
+{% endset %}
+{% block content %}
+    <article class="prose lg:prose-xl w-full mx-auto mt-40">
+      {{ content | safe }}
+<!--- Change  ID number to your Hyvor Website ID. Remove comment line to use Hyvor
+<div id="hyvor-talk-view"></div>
+<script type="text/javascript">
+    var HYVOR_TALK_WEBSITE = IDNUMBER; // DO NOT CHANGE THIS
+    var HYVOR_TALK_CONFIG = {
+        url: '  {% set absolutePostUrl %}{{ site.url }}{{ post.url | url }}{% endset %}',
+        id: '{{page.id}}'
+    };
+</script>
+<script async type="text/javascript" src="//talk.hyvor.com/web-api/embed"></script>
+-->
+      </article>
+    {% if recommendedPosts %}
+      <footer class="recommended-posts">
+        {% set postListItems = recommendedPosts %}
+        {% set postListHeadline = 'More from the blog' %}
+        {% include "partials/post-list.njk" %}
+      </footer>
+    {% endif %}
+{% endblock %}

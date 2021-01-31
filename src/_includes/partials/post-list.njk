@@ -1,0 +1,28 @@
+        {% if postListHeadline %}
+    <h2 class="post-rec">
+      {{ postListHeadline }}
+    </h2>
+    {% endif %}
+     <section class="flex flex-wrap justify-between pt-12 -mx-6 ">
+        {% for item in postListItems %}
+        <article class="w-full md:w-1/2 p-6 flex flex-col flex-grow flex-shrink">
+						<div class="flex-1 bg-yellow-50 rounded-t rounded-b-none overflow-hidden shadow-md pb-5">
+							<div class="flex flex-wrap no-underline hover:no-underline">
+              {% if item.data.imageURL %}
+         <div class="mx-auto" style="max-height: 300px; overflow-y: hidden;">
+           <img src="{{ item.data.imageURL }}" class="mx-auto pb-6" style="width: 100%; max-width: 100%; height: auto; display: block; margin-left: auto; margin-right: auto;" alt="post image"> 
+           </div>
+            {% endif %}
+            <div class="w-full px-10 pt-5 pb-5">
+        <time style="font-size: 12px; font-family: Calibri;" datetime="{{ item.data.date }}">
+        🕒 {{ item.data.date | dateFilter }}</time>
+          <h2 class="w-full" ><a class="text-yellow-500 text-4xl font-serif" href="{{ item.url }}">{{ item.data.title }}</a></h2>
+          <p  class="text-gray-800 font-sans text-base mb-5">{{ item.data.description }}</p>
+          <a class="bg-yellow-100 p-2 hover:bg-yellow-300 mb-4"href="{{ item.url }}">Read 👉</a>
+     </div>
+ </div>
+ </div>
+ </article>
+        {% endfor %}
+           </section>
+

@@ -1,6 +1,6 @@
 ---
 title: 'Tag Archive'
-layout: 'layouts/feed.html'
+layout: 'layouts/feed.njk'
 pagination:
   data: collections
   size: 1

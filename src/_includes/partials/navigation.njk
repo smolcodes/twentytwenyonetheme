@@ -1,0 +1,14 @@
+	   {% set navPages = collections.all | eleventyNavigation %}
+  <nav class="mt-0 w-full container mx-auto flex items-center">
+      {#- Read more about `eleventy-navigation` at https://www.11ty.dev/docs/plugins/navigation/ #}
+        <div class="text-sm mx-auto text-gray-100">
+         <ul class="list-reset inline-flex">
+         {%- for entry in navPages %}
+          <li class="mr-2">
+          <a href="{{ entry.url | url }}">{{ entry.title }}</a>
+           </li>
+                {%- endfor %}
+             </ul>
+             </div>
+   </nav>
+
