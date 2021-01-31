@@ -1,3 +1,3 @@
 {
-   "layout" : "layouts/workpage.html"
+   "layout" : "layouts/workpage.njk"
 }
