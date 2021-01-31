@@ -2,6 +2,9 @@ const pluginNavigation = require("@11ty/eleventy-navigation");
 const syntaxHighlight = require("@11ty/eleventy-plugin-syntaxhighlight");
 const rssPlugin = require('@11ty/eleventy-plugin-rss');
 const slugify = require("slugify");
+const htmlmin = require("html-minifier");
+const Image = require("@11ty/eleventy-img");
+const sharp = require("sharp");
 
 // Filters
 const dateFilter = require('./src/filters/date-filter.js');
@@ -12,44 +15,106 @@ const isProduction = process.env.NODE_ENV === 'production';
 
 const sortByDisplayOrder = require('./src/utils/sort-by-display-order.js');
 
-module.exports = config => {
-  config.setDataDeepMerge(true);
-  config.addPlugin(syntaxHighlight);
+module.exports = (eleventyConfig) => {
+    //html minifier
+    eleventyConfig.addTransform("htmlmin", function(content, outputPath) {
+      // Eleventy 1.0+: use this.inputPath and this.outputPath instead
+      if( outputPath.endsWith(".html") ) {
+        let minified = htmlmin.minify(content, {
+          useShortDoctype: true,
+          removeComments: true,
+          collapseWhitespace: true
+        });
+        return minified;
+      }
+  
+      return content;
+    });
+  //shortcodes
+  eleventyConfig.addNunjucksAsyncShortcode("Image", async (src, alt) => {
+    if (!alt) {
+      throw new Error(`Missing \`alt\` on myImage from: ${src}`);
+    }
 
-  config.setFrontMatterParsingOptions({
+    let stats = await Image(src, {
+      widths: [25, 320, 640, 960, 1200, 1800, 2400],
+      formats: ["jpeg", "webp"],
+      urlPath: "/images/",
+      outputDir: "./dist/images/",
+    });
+
+    let lowestSrc = stats["jpeg"][0];
+
+    const placeholder = await sharp(lowestSrc.outputPath)
+      .resize({ fit: sharp.fit.inside })
+      .blur()
+      .toBuffer();
+
+    const base64Placeholder = `data:image/png;base64,${placeholder.toString(
+      "base64"
+    )}`;
+
+    const srcset = Object.keys(stats).reduce(
+      (acc, format) => ({
+        ...acc,
+        [format]: stats[format].reduce(
+          (_acc, curr) => `${_acc} ${curr.srcset} ,`,
+          ""
+        ),
+      }),
+    );
+
+    const source = `<source type="image/webp" data-srcset="${srcset["webp"]}" >`;
+
+    const img = `<img
+      class="lazy"
+      alt="${alt}"
+      src="${base64Placeholder}"
+      data-src="${lowestSrc.url}"
+      data-sizes='(min-width: 1024px) 1024px, 100vw'
+      data-srcset="${srcset["jpeg"]}"
+      width="${lowestSrc.width}"
+      height="${lowestSrc.height}">`;
+
+    return `<picture> ${source} ${img} </picture>`;
+  });  
+  eleventyConfig.setDataDeepMerge(true);
+  eleventyConfig.addPlugin(syntaxHighlight);
+
+  eleventyConfig.setFrontMatterParsingOptions({
     excerpt: true,
     excerpt_separator: "<!-- excerpt -->",
   });
   // Add filters
 
-  config.addFilter('dateFilter', dateFilter);
-  config.addFilter('w3DateFilter', w3DateFilter);
+  eleventyConfig.addFilter('dateFilter', dateFilter);
+  eleventyConfig.addFilter('w3DateFilter', w3DateFilter);
 
   // Plugins
-  config.addPlugin(rssPlugin);
-  config.addPlugin(pluginNavigation);
+  eleventyConfig.addPlugin(rssPlugin);
+  eleventyConfig.addPlugin(pluginNavigation);
 
   // Returns work items, sorted by display order
-  config.addCollection('work', collection => {
+  eleventyConfig.addCollection('work', collection => {
     return sortByDisplayOrder(
         collection.getFilteredByGlob('./src/work/*.md'));
   });
 
   // Returns a collection of blog posts in reverse date order
-  config.addCollection('blog', collection => {
+  eleventyConfig.addCollection('blog', collection => {
     return [...collection.getFilteredByGlob('./src/posts/*.md')].reverse();
   });
 
   // Tell 11ty to use the .eleventyignore and ignore our .gitignore file
-  config.setUseGitIgnore(false);
+  eleventyConfig.setUseGitIgnore(false);
 
-  config.addPassthroughCopy("src/images");
-  config.addPassthroughCopy("src/css");
-  config.addPassthroughCopy('src/admin');
+  eleventyConfig.addPassthroughCopy("src/images");
+  eleventyConfig.addPassthroughCopy("src/css");
+  eleventyConfig.addPassthroughCopy('src/admin');
 
-  config.setTemplateFormats(["jpg", "png", "webp", "md", "njk", "html"]);
+  eleventyConfig.setTemplateFormats(["jpg", "png", "webp", "md", "njk", "html"]);
   return {
-    markdownTemplateEngine: 'njk',
+    markdownTemplateEngine: 'liquid',
     dataTemplateEngine: 'njk',
     htmlTemplateEngine: 'njk',
     dir: {
