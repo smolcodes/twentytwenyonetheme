@@ -17,19 +17,19 @@ const sortByDisplayOrder = require('./src/utils/sort-by-display-order.js');
 
 module.exports = (eleventyConfig) => {
     //html minifier
-    eleventyConfig.addTransform("htmlmin", function(content, outputPath) {
-      // Eleventy 1.0+: use this.inputPath and this.outputPath instead
-      if( outputPath.endsWith(".html") ) {
-        let minified = htmlmin.minify(content, {
-          useShortDoctype: true,
-          removeComments: true,
-          collapseWhitespace: true
-        });
-        return minified;
+    eleventyConfig.addTransform("htmlmin", (content, outputPath) => {
+      if ( outputPath.endsWith(".html") )
+      {
+          let minified = htmlmin.minify(content, {
+              useShortDoctype: true,
+              removeComments: true,
+              collapseWhitespace: true
+          })
+          return minified
       }
-  
-      return content;
-    });
+      return content
+  })
+
   //shortcodes
   eleventyConfig.addNunjucksAsyncShortcode("Image", async (src, alt) => {
     if (!alt) {
