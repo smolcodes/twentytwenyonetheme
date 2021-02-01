@@ -5,11 +5,11 @@
   "main": ".eleventy.js",
   "scripts": {
     "build": "cross-env NODE_ENV=production npm-run-all -p build:*",
-    "build:eleventy": "eleventy",
     "build:webpack": "webpack",
+    "build:eleventy": "eleventy",
     "start": "npm-run-all -p build:* -p start:*",
-    "start:eleventy": "eleventy --serve --quiet",
-    "start:webpack": "webpack --watch"
+    "start:webpack": "webpack --watch",
+    "start:eleventy": "eleventy --serve --quiet"
   },
   "repository": {
     "type": "git",
