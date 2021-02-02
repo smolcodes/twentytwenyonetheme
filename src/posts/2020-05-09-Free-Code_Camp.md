@@ -19,9 +19,69 @@ To use mathjax, simply put your math between `\\(...\\)` for inline code and bet
 
 _________
 
+## Callout
+
+This theme supports 7 callout colors. To make a callout block, start with 3 colons, the name of type of callout you want to use followed by three closing colons.
+
+```html
+::: callout-pink
+Your text
+:::
+```
+
+::: callout
+### Standard Collout
+_______
+put by the colon callout.
+:::
+
+::: callout-yellow 
+### Yellow Callout
+_______
+This is a yellow callout. Put callout-yellow by the colon
+:::
+
+::: callout-green 
+### Green Callout
+_______
+This is a green callout. Put callout-green by the colon
+:::
+
+::: callout-pink 
+### Pink Callout
+_______
+This is a pink callout. Put callout-pink by the colon
+:::
+
+::: callout-purple 
+### purple Callout
+_______
+This is a purple callout. Put callout-purple by the colon
+:::
+
+::: callout-blue
+### Blue Callout
+_______
+This is a purple callout. Put callout-purple by the colon
+:::
+
+::: warning
+### Warning
+_______
+This is a red callout. Put warning by the colon
+:::
+
+## Shortcode
+
+```html
+{% raw %}{% Image "Image URL", "Image description" %}{% endraw %}
+```
+This short code will make your images load faster and is responsive. You can use it in your markdown instead of`[Image Description](image url)`. 
+
+## 
 ## Hyvor
 
-You must have a Hyvor account to use this feature. In sr/_includes/layouts open post.html and look for
+You must have a Hyvor account to use this feature. In sr/_includes/layouts open post.njk and look for
 
 ```html
 <!--- Change  ID number to your Hyvor Website ID. Remove comment line to use Hyvor
@@ -29,8 +89,8 @@ You must have a Hyvor account to use this feature. In sr/_includes/layouts open 
 <script type="text/javascript">
     var HYVOR_TALK_WEBSITE = IDNUMBER; // DO NOT CHANGE THIS
     var HYVOR_TALK_CONFIG = {
-        url: '.',
-        id: ''
+        url: '{% raw %}{% set absolutePostUrl %}{{ site.url }}{{ post.url | url }}{% endset %}{% endraw %}',
+        id: '{% raw %}{{page.id}}{% endraw %}'
     };
 </script>
 <script async type="text/javascript" src="//talk.hyvor.com/web-api/embed"></script>
