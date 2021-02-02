@@ -16,19 +16,41 @@ const isProduction = process.env.NODE_ENV === 'production';
 const sortByDisplayOrder = require('./src/utils/sort-by-display-order.js');
 
 module.exports = (eleventyConfig) => {
-    //html minifier
-    eleventyConfig.addTransform("htmlmin", (content, outputPath) => {
-      if ( outputPath.endsWith(".html") )
-      {
-          let minified = htmlmin.minify(content, {
-              useShortDoctype: true,
-              removeComments: true,
-              collapseWhitespace: true
-          })
-          return minified
-      }
-      return content
-  })
+  //html minifier
+  eleventyConfig.addTransform("htmlmin", function (content, outputPath) {
+    // Eleventy 1.0+: use this.inputPath and this.outputPath instead
+    if (outputPath.endsWith(".html")) {
+      let minified = htmlmin.minify(content, {
+        useShortDoctype: true,
+        removeComments: true,
+        collapseWhitespace: true
+      });
+      return minified;
+    }
+
+    return content;
+  });
+
+  /// Markdown Component from Markdown-it
+  let markdownIt = require("markdown-it");
+  let markdownItFootnote = require("markdown-it-footnote");
+  let markdownItContainer = require("markdown-it-container");
+  let options = {
+    html: true,
+    breaks: true,
+    linkify: true,
+    typographer: true
+  };
+  eleventyConfig.setLibrary("md", markdownIt(options)
+  .use(markdownItFootnote)
+  .use(markdownItContainer, 'callout')
+  .use(markdownItContainer, 'callout-yellow')
+  .use(markdownItContainer, 'callout-blue')
+  .use(markdownItContainer, 'callout-pink')
+  .use(markdownItContainer, 'callout-purple')
+  .use(markdownItContainer, 'callout-green')
+  .use(markdownItContainer, 'warning')
+  );
 
   //shortcodes
   eleventyConfig.addNunjucksAsyncShortcode("Image", async (src, alt) => {
@@ -61,7 +83,7 @@ module.exports = (eleventyConfig) => {
           (_acc, curr) => `${_acc} ${curr.srcset} ,`,
           ""
         ),
-      }),
+      })
     );
 
     const source = `<source type="image/webp" data-srcset="${srcset["webp"]}" >`;
@@ -76,8 +98,9 @@ module.exports = (eleventyConfig) => {
       width="${lowestSrc.width}"
       height="${lowestSrc.height}">`;
 
-    return `<picture> ${source} ${img} </picture>`;
-  });  
+    return `<div class="image-wrapper"><picture> ${source} ${img} </picture></div>`;
+  });
+
   eleventyConfig.setDataDeepMerge(true);
   eleventyConfig.addPlugin(syntaxHighlight);
 
@@ -114,7 +137,7 @@ module.exports = (eleventyConfig) => {
 
   eleventyConfig.setTemplateFormats(["jpg", "png", "webp", "md", "njk", "html"]);
   return {
-    markdownTemplateEngine: 'liquid',
+    markdownTemplateEngine: 'njk',
     dataTemplateEngine: 'njk',
     htmlTemplateEngine: 'njk',
     dir: {
