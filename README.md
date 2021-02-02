@@ -78,3 +78,12 @@ Your Hyvor id will be on the General Settings Page of the Hyvor Dashboard.
 ### Final Notes
 
 Go to tailwind.config to customize the styles. This template uses pre-flight.
+
+### Version 2
+
+Now supports
+
+* Image shortcode using eleventy-img
+* HTML minifier
+* Markdown Callouts
+* Fixed all posts to NJK
